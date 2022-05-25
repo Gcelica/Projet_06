@@ -1,10 +1,6 @@
-//import librairie Express
 const express = require("express");
-//import de Mongoose pour la base de donnée
 const mongoose = require("mongoose");
-//creation de l'application (express)
-const app = express();
-//import router
+
 const userRoutes = require("./routes/user");
 
 mongoose
@@ -15,11 +11,24 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-app.use((req, res) => {
-  res.json({ message: "Votre requête a bien été reçue !" }); //objet retourné
+//création de l'application express
+const app = express();
+
+app.use(express.json()); // recupere les requetes avec un content-type/json
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
+  next();
 });
 
 app.use("/api/auth", userRoutes);
 
-//export de la const app pour y acceder depuis d'autres fichier
 module.exports = app;
