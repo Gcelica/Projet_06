@@ -1,8 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const userRoutes = require("./routes/user");
-
+const userRoutes = require("./routes/user"); //parcours utilisateur
+const sauceRoutes = require("./routes/sauce"); //parcours des sauces
+const path = require("path"); //accès au chemin des fichiers
+//connexion base de données MongoDB
 mongoose
   .connect(
     "mongodb+srv://new_user01:jinxjinx@cluster0.na98x.mongodb.net/?retryWrites=true&w=majority",
@@ -29,7 +31,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use("/api/auth", userRoutes);
-app.use("/api/sauces", userRoutes);
+app.use("/api/sauces", sauceRoutes);
 
 module.exports = app;

@@ -1,21 +1,21 @@
+// importer token d'authentification
 const jwt = require("jsonwebtoken");
-const { request } = require("../app");
 
+// middleware d'authentification
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-    const userId = decodedToken.userId;
-    request.auth = { userID: userId };
+    const token = req.headers.authorization.split(" ")[1]; // récupération du token
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET"); // décoder le token
+    const userId = decodedToken.userId; // récupération du userID
     if (req.body.userId && req.body.userId !== userId) {
-      throw "Invalid user ID";
+      // vérifier si userID correspond au token
+      throw "l'utilisateur n'es pas valable";
     } else {
       next();
     }
   } catch {
     res.status(401).json({
-      error: new Error("Invalid request!"),
+      error: new Error("La requête n'est pas valide!"),
     });
-    console.log(error);
   }
 };

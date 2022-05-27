@@ -1,3 +1,4 @@
+//import le model sauce
 const Sauce = require("../models/Sauce");
 const fs = require("fs"); //utilisation du module Node.js fs
 
@@ -16,7 +17,6 @@ exports.creatSauce = (req, res, next) => {
     .save()
     .then(() => res.status(201).json({ message: "sauce enregistré !" }))
     .catch((error) => (400).JSON({ error }));
-  console.log(error);
 };
 
 //modification sauce
@@ -35,7 +35,6 @@ exports.modifySauce = (req, res, next) => {
   )
     .then(() => res.status(200).json({ message: "Sauce modifié" }))
     .catch(() => res.status(400).json({ error }));
-  console.log(error);
 };
 
 //suppression sauce
@@ -49,11 +48,9 @@ exports.deleteSauce = (req, res, next) => {
 
           .then(() => res.status(200).json({ message: "Sauce supprimé" }))
           .catch((error) => res.status(400).json({ error }));
-        console.log(error);
       });
     })
     .catch((error = res.status(500).json({ error })));
-  console.log(error);
 };
 
 // Récupération d'une seule sauce
@@ -61,13 +58,11 @@ exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
-  console.log(error);
 };
 
 // Récupération de toutes les sauces
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
-    .then((sauces) => res.status(200).json(sauces))
+    .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(400).json({ error }));
-  console.log(error);
 };
