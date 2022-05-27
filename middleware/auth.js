@@ -16,5 +16,6 @@ module.exports = (req, res, next) => {
     res.status(401).json({
       error: new Error("Invalid request!"),
     });
+    console.log(error);
   }
 };
