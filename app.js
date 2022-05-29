@@ -1,9 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+//import des routes
 const userRoutes = require("./routes/user"); //parcours utilisateur
 const sauceRoutes = require("./routes/sauce"); //parcours des sauces
+
+//import module path
 const path = require("path"); //accès au chemin des fichiers
+
 //connexion base de données MongoDB
 mongoose
   .connect(
@@ -18,6 +22,7 @@ const app = express();
 
 app.use(express.json()); // recupere les requetes avec un content-type/json
 
+//headers pour autoriser les requetes
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
